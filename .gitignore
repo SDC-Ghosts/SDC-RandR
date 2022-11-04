@@ -1,0 +1,4 @@
+node_modules
+.env
+pythonwork/.ipynb_checkpoints
+pythonwork/data
