@@ -58,3 +58,4 @@ CSV HEADER;
 
 ALTER TABLE reviews ALTER COLUMN date TYPE TIMESTAMP USING to_timestamp(date/1000);
 ALTER TABLE reviews ALTER COLUMN date SET DEFAULT now();
+UPDATE reviews SET response = NULL where response = 'null';
