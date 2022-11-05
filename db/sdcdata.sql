@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS reviews (
   product_id INT NOT NULL,
   helpfulness int DEFAULT 0,
   reported BOOLEAN DEFAULT FALSE,
-  date BIGINT DEFAULT EXTRACT(epoch FROM now()) * 1000,
+  date BIGINT,
   response VARCHAR(1000),
   PRIMARY KEY (id)
   );
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS characteristics (
   product_id INT NOT NULL,
   name varchar(20) NOT NULL,
   PRIMARY KEY (id)
-  );
+);
 
 COPY characteristics(id, product_id, name)
 FROM '/home/nyall/Desktop/HackReactor/SDC-RandR/pythonwork/data/characteristics.csv'
@@ -37,21 +37,24 @@ CREATE TABLE IF NOT EXISTS characteristic_reviews (
   characteristic_id INT NOT NULL REFERENCES characteristics(id),
   value INT NOT NULL,
   PRIMARY KEY (id)
-  );
+);
 
-  COPY characteristic_reviews(id, characteristic_id, review_id, value)
-  FROM '/home/nyall/Desktop/HackReactor/SDC-RandR/pythonwork/data/characteristic_reviews.csv'
-  DELIMiTER ','
-  CSV HEADER;
+COPY characteristic_reviews(id, characteristic_id, review_id, value)
+FROM '/home/nyall/Desktop/HackReactor/SDC-RandR/pythonwork/data/characteristic_reviews.csv'
+DELIMiTER ','
+CSV HEADER;
 
-CEATE TABLE IF NOT EXISTS reviews_photos(
+CREATE TABLE IF NOT EXISTS reviews_photos(
   id INT NOT NULL,
   review_id INT NOT NULL REFERENCES reviews(id),
   url VARCHAR(150) NOT NULL,
   PRIMARY KEY (id)
-  );
+);
 
 COPY reviews_photos(id, review_id, url)
 FROM '/home/nyall/Desktop/HackReactor/SDC-RandR/pythonwork/data/reviews_photos.csv'
 DELIMITER ','
 CSV HEADER;
+
+ALTER TABLE reviews ALTER COLUMN date TYPE TIMESTAMP USING to_timestamp(date/1000);
+ALTER TABLE reviews ALTER COLUMN date SET DEFAULT now();
