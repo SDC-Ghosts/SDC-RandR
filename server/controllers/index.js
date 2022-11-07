@@ -10,10 +10,13 @@ module.exports.getProductReviews = async function getReviewsForProduct(req, res)
 };
 
 module.exports.getProductReviewsMeta = async function getProductReviewsMeta(req, res) {
-  console.log(req);
-  res.json(req);
-
-}
+  try {
+    const meta = await model.findReviewsMeta(req.query.product_id);
+    res.status(200).json(meta);
+  } catch (err) {
+    res.sendStatus(500)
+  }
+};
 
 module.exports.putHelpfulReview = async function putHelpfulReview(req, res) {
   try {

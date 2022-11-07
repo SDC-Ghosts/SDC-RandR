@@ -28,9 +28,10 @@ module.exports.findProductReviews = async function findAllReviews({
   }
 };
 
-module.exports.findProductReviewsMeta = async function findProductReviewsMeta() {
+module.exports.findProductReviewsMeta = async function findProductReviewsMeta(product_id) {
   try {
-    reviewsMeta = postgresDB.query('', []);
+    const reviewsMeta = await postgresDB.query("WITH allRatings AS (SELECT a.product_id, json_object_agg(a.rating, a.count) as ratings FROM (SELECT product_id, rating, count(rating) FROM reviews WHERE product_id = $1 GROUP BY rating, product_id) a GROUP BY a.product_id), aName AS (SELECT COUNT (CASE WHEN recommend THEN true ELSE NULL END) as true ,count(CASE WHEN NOT recommend THEN true ELSE NULL END) as false from reviews where product_id = $1), chars as (SELECT json_object_agg(b.name, b.characteristics) as characteristics from (SELECT name, json_build_object('id', chars.id, 'value', AVG(cr.value))as characteristics FROM characteristics as chars INNER JOIN  characteristic_reviews as cr ON chars.id = cr.characteristic_id WHERE product_id = $1 GROUP BY name, chars.id) b) SELECT allRatings.product_id, allRatings.ratings, row_to_json(aName) AS recommended, chars.* FROM allRatings, aName, chars;", [product_id]);
+    return reviewsMeta.rows[0];
   } catch (err) {
     console.log(err);
     return err;
