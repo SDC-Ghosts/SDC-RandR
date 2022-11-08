@@ -63,3 +63,7 @@ SELECT setVal('reviews_id_seq', MAX(id)) FROM reviews;
 SELECT setVal('characteristics_id_seq', MAX(id)) FROM characteristics;
 SELECT setVal('characteristic_review_id_seq', MAX(id)) FROM characteristic_review;
 SELECT setVal('reviews_photos_id_seq', MAX(id)) FROM reviews_photos;
+CREATE INDEX reviews_product on reviews USING HASH (product_id);
+CREATE INDEX characteristic_product on characteristics USING HASH (product_id);
+CREATE INDEX product_characteristic on characteristic_reviews USING HASH (characteristic_id);
+CREATE INDEX review_photo on reviews_photos USING HASH (review_id);

@@ -3,18 +3,33 @@ const model = require('../models');
 module.exports.getProductReviews = async function getReviewsForProduct(req, res) {
   try {
     const reviews = await model.findReviews(req.query);
-    res.status(200).json(reviews);
+    console.log(reviews);
+    if (reviews) {
+      res.status(200).json(reviews);
+    } else {
+      res.sendStatus(404);
+    }
   } catch (err) {
-    console.log(err);
+    res.sendStatus(500);
   }
 };
 
 module.exports.getProductReviewsMeta = async function getProductReviewsMeta(req, res) {
   try {
     const meta = await model.findReviewsMeta(req.query.product_id);
-    res.status(200).json(meta);
+    console.log(meta);
+    if (meta) {
+      res.status(200).json(meta);
+    } else {
+      res.status(200).json({
+        product_id: req.query.product_id,
+        ratings: {},
+        recommended: {},
+        characteristics: {},
+      });
+    }
   } catch (err) {
-    res.sendStatus(500)
+    res.sendStatus(500);
   }
 };
 
@@ -32,7 +47,7 @@ module.exports.putHelpfulReview = async function putHelpfulReview(req, res) {
   }
 };
 
-module.exports.putReportReview = async function putHelpfulReview(req, res) {
+module.exports.putReportReview = async function putReportReview(req, res) {
   try {
     const report = await model.report(req.params.review_id);
     if (report.rowCount === 1) {
