@@ -3,7 +3,6 @@ const model = require('../models');
 module.exports.getProductReviews = async function getReviewsForProduct(req, res) {
   try {
     const reviews = await model.findReviews(req.query);
-    console.log(reviews);
     if (reviews) {
       res.status(200).json(reviews);
     } else {
@@ -17,7 +16,6 @@ module.exports.getProductReviews = async function getReviewsForProduct(req, res)
 module.exports.getProductReviewsMeta = async function getProductReviewsMeta(req, res) {
   try {
     const meta = await model.findReviewsMeta(req.query.product_id);
-    console.log(meta);
     if (meta) {
       res.status(200).json(meta);
     } else {

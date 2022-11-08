@@ -2,3 +2,5 @@ node_modules
 .env
 pythonwork/.ipynb_checkpoints
 pythonwork/data
+psql.pem
+db/sdc.gz
