@@ -1,0 +1,2 @@
+access.log is in the git ignore
+server records logs to access.log
