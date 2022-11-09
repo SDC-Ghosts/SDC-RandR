@@ -7,6 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/fec2/hr-rfp', router);
+app.use('/loaderio-c5c53a91204c93fe17f8fa2872123a44.txt'.express.static(path.join(__dirname, '../server/loaderio.txt')));
 
 app.listen(process.env.PORT || 3000, (err) => {
   if (err) {
