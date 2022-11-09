@@ -15,7 +15,8 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs/access.l
 app.use(morgan('tiny', { stream: accessLogStream }));
 
 // loaderio testing
-app.use('/loaderio-92bb7174e20fe1de1142814ca2b76e78.txt', express.static(path.join(__dirname, '../server/loaderio.txt')));
+app.use('/loaderio-*.txt', express.static(path.join(__dirname, '../server/loaderio.txt')));
+app.use((req, res, next) => { res.append('Product_Id', req.query.product_id); next(); });
 
 // router
 app.use('/api/fec2/hr-rfp', router);
