@@ -4,3 +4,4 @@ pythonwork/.ipynb_checkpoints
 pythonwork/data
 psql.pem
 db/sdc.gz
+server/logs
