@@ -5,3 +5,4 @@ pythonwork/data
 psql.pem
 db/sdc.gz
 server/logs/access.log
+newrelic_agent.log
