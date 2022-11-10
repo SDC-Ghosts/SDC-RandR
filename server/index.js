@@ -21,6 +21,7 @@ app.use((req, res, next) => { res.append('Product_Id', req.query.product_id); ne
 
 // router
 app.get('/api/fec2/hr-rfp/reviews', controllers.getProductReviews);
+app.get('/api/fec2/hr-rfp/reviews/meta', controllers.getProductReviewsMeta);
 // app.use('/api/fec2/hr-rfp', router);
 app.listen(process.env.PORT || 3000, (err) => {
   if (err) {
