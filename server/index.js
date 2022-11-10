@@ -15,7 +15,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logs/access.l
 app.use(morgan('tiny', { stream: accessLogStream }));
 
 // loaderio testing
-app.use('/loaderio-*.txt', express.static(path.join(__dirname, '../server/loaderio.txt')));
+app.use('/loaderio-8a405fbfdfb381a8668eed96b1f7524a.txt', express.static(path.join(__dirname, '../server/loaderio.txt')));
 app.use((req, res, next) => { res.append('Product_Id', req.query.product_id); next(); });
 
 // router
