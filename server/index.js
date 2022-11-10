@@ -3,6 +3,7 @@ const path = require('path');
 const morgan = require('morgan');
 const fs = require('fs');
 const router = require('./router');
+const controllers = require('./controllers');
 require('dotenv').config();
 
 // basic server setup
@@ -19,7 +20,8 @@ app.use('/loaderio-8a405fbfdfb381a8668eed96b1f7524a.txt', express.static(path.jo
 app.use((req, res, next) => { res.append('Product_Id', req.query.product_id); next(); });
 
 // router
-app.use('/api/fec2/hr-rfp', router);
+app.get('/api/fec2/hr-rfp/reviews', controllers.getProductReviews);
+// app.use('/api/fec2/hr-rfp', router);
 app.listen(process.env.PORT || 3000, (err) => {
   if (err) {
     console.log(err);
